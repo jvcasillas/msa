@@ -53,12 +53,18 @@ msa_theme <- function() {
   list(
     theme_classic(base_size = 20),
     theme(
-      legend.position = "top",
+      legend.position = c(1, 0), 
+      legend.direction = "horizontal", 
+      legend.background = element_rect(fill = alpha("white", 0)), 
+      legend.justification = c("right", "bottom"),
+      legend.box.just = "right",
       axis.text.x = element_blank(),
       axis.ticks.x = element_blank(),
       axis.line = element_blank()
     ),
-    guides(color = guide_legend(override.aes = list(size = 6, pch = 20, alpha = 1)))
+    guides(
+      color = guide_legend(ncol = 4, override.aes = list(size = 6, pch = 20, alpha = 1))
+    )
   )
 }
 
@@ -387,7 +393,7 @@ server <- function(input, output) {
         scale_x_discrete(expand =  c(0.01,0.01)) +
         labs(caption = glue("{fig_capl1}{fig_capl2}"),
           x = x_lab(),
-          y = "Posterior effect size\n") +
+          y = "Posterior effect size") +
         scale_color_viridis_d(name = NULL, begin = 0.15, end = 0.85) +
         msa_theme()
 
@@ -407,7 +413,7 @@ server <- function(input, output) {
         scale_x_discrete(expand =  c(0.01,0.01)) +
         labs(caption = glue("{fig_capl1}{fig_capl2}"),
           x = x_lab(),
-          y = "Posterior effect size\n") +
+          y = "Posterior effect size") +
         scale_color_viridis_d(name = NULL, begin = 0.15, end = 0.85) +
         msa_theme()
 
