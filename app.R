@@ -63,7 +63,10 @@ msa_theme <- function() {
       axis.line = element_blank()
     ),
     guides(
-      color = guide_legend(ncol = 4, override.aes = list(size = 6, pch = 20, alpha = 1))
+      color = guide_legend(
+        ncol = 4, 
+        override.aes = list(size = 6, pch = 20, alpha = 1)
+      )
     )
   )
 }
@@ -73,13 +76,20 @@ msa_scatter_theme <- function() {
   list(
     theme_minimal(base_size = 20),
     theme(
-      legend.position = "top",
+      legend.position = c(0, 1),
+      legend.direction = "horizontal", 
+      legend.justification = c("left", "top"),
+      legend.box.just = "left",
       axis.title.y = element_text(size = rel(.9), hjust = 0.95),
       axis.title.x = element_text(size = rel(.9), hjust = 0.95),
       panel.grid.major = element_line(colour = 'grey90', linewidth = 0.15),
       panel.grid.minor = element_line(colour = 'grey90', linewidth = 0.15)
     ),
-    guides(color = guide_legend(override.aes = list(size = 5, alpha = 1)))
+    guides(color = guide_legend(
+      ncol = 4, 
+      override.aes = list(size = 5, alpha = 1)
+      )
+    )
   )
 }
 
@@ -455,7 +465,8 @@ server <- function(input, output) {
       if (input$sp_color_var == "none") {
         # Raw xvar, omit color var
         merged %>%
-          select(y = input$sp_y_var, x = input$sp_x_var)
+          select(y = input$sp_y_var, x = input$sp_x_var) %>% 
+          na.omit()
 
       } else {
         # Raw xvar, include color var
@@ -479,7 +490,8 @@ server <- function(input, output) {
           select(y = input$sp_y_var, x = input$sp_x_var,
                  color_var = input$sp_color_var) %>%
           filter(!is.na(color_var)) %>%
-          mutate(x = (x - mean(x, na.rm = T)) / sd(x, na.rm = T))
+          mutate(x = (x - mean(x, na.rm = T)) / sd(x, na.rm = T)) %>% 
+          na.omit()
 
       }
     }
@@ -544,9 +556,10 @@ server <- function(input, output) {
       } else {
         # Include regression line, include color var
         ggplot(data_scatter()) +
-        aes(x = x, y = y) +
-        geom_point(aes(color = color_var), alpha = 0.3, size = 4) +
-        geom_smooth(method = "lm", formula = "y ~ x", linewidth = 1) +
+        aes(x = x, y = y, color = color_var) +
+        geom_smooth(method = "lm", formula = "y ~ x", linewidth = 1, 
+          fullrange = T, show.legend = F, alpha = 0.2) +
+        geom_point(alpha = 0.3, size = 4) +
         labs(y = sp_y_lab(), x = sp_x_lab()) +
         scale_color_viridis_d(name = NULL, begin = 0.15, end = 0.85) +
         msa_scatter_theme()
