@@ -208,7 +208,7 @@ ui <- navbarPage(
         div(align = "left",
           selectInput(
             inputId = "framework",
-            label = "Choose a framework:",
+            label = "Inferential framework:",
             choices = c("Any", "Frequentist", "Bayesian")
           )
         )
@@ -293,7 +293,7 @@ ui <- navbarPage(
           checkboxInput(
             inputId = "std_vars",
             label = "Standardize predictor",
-            value = TRUE
+            value = FALSE
           ),
           checkboxInput(
             inputId = "add_regression",
@@ -549,7 +549,7 @@ server <- function(input, output) {
         ggplot(data_scatter()) +
         aes(x = x, y = y) +
         geom_point(alpha = 0.3, size = 4) +
-        geom_smooth(method = "lm", formula = "y ~ x", linewidth = 1) +
+        geom_smooth(method = "lm", formula = "y ~ x", linewidth = 1, se = F) +
         labs(y = sp_y_lab(), x = sp_x_lab()) +
         msa_scatter_theme()
 
@@ -558,7 +558,7 @@ server <- function(input, output) {
         ggplot(data_scatter()) +
         aes(x = x, y = y, color = color_var) +
         geom_smooth(method = "lm", formula = "y ~ x", linewidth = 1, 
-          fullrange = T, show.legend = F, alpha = 0.2) +
+          fullrange = T, show.legend = F, alpha = 0.2, se = F) +
         geom_point(alpha = 0.3, size = 4) +
         labs(y = sp_y_lab(), x = sp_x_lab()) +
         scale_color_viridis_d(name = NULL, begin = 0.15, end = 0.85) +
