@@ -5,10 +5,10 @@ account: jvcasillas
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 7982783
-bundleId: 6724480
+bundleId: 6726764
 url: https://jvcasillas.shinyapps.io/shiny_msa/
-when: 1673498114.77666
-lastSyncTime: 1673498114.77667
+when: 1673550830.73838
+lastSyncTime: 1673550830.73839
 asMultiple: FALSE
 asStatic: FALSE
 ignoredFiles: README.md
