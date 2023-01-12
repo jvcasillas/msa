@@ -131,12 +131,12 @@ ui <- navbarPage(
   # Tab panel 1: Description of the app
   tabPanel("Overview",
     fluidRow(
-      column(1, p("")),
-      column(10,
+      column(2, p("")),
+      column(8,
         h1("Welcome to the MSA shiny app"), 
         div(align = "center", 
           img(src = "ForkingPaths.png", width = "50%", 
-              style = "float:right; padding-left:20px"
+              style = "float:right; padding-left:10px"
              )
         ),
         #div(align = "center", 
@@ -176,13 +176,13 @@ ui <- navbarPage(
            "and you can read the preprint here:", 
            tags$a("https://psyarxiv.com/q8t2k/.", href = "https://psyarxiv.com/q8t2k/"))
       ),
-      column(1, p(""))
+      column(2, p(""))
     ),
     # Include footer with author info and github links
     br(), br(), br(),
     fluidRow(
-      column(1, p("")),
-      column(10,
+      column(2, p("")),
+      column(8,
         wellPanel(
           p(strong("Initiating authors:"), 
             tags$a("Stefano Coretta,", href = "https://stefanocoretta.github.io"), 
@@ -200,7 +200,7 @@ ui <- navbarPage(
           )
         )
       ),
-      column(1, p(""))
+      column(2, p(""))
     )
   ),
   # Panel 2: Forest plot of meta-analytic estimates
@@ -251,6 +251,11 @@ ui <- navbarPage(
       ),
       # Spacer right
       column(1, p(""))
+    ),
+    fluidRow(
+      column(2, p("")), 
+      column(8, uiOutput("checkbox")), 
+      column(2, p("")),
     ),
     # Generate plot
     fluidRow(
@@ -347,6 +352,23 @@ ui <- navbarPage(
 # Define server logic required to generate plots
 server <- function(input, output) {
 
+  # Generate checkboxes for UI
+  output$checkbox <- renderUI({
+    choice <- select(merged, input$color) %>% 
+      na.omit() %>% 
+      pull(input$color) %>% 
+      unique()
+    
+    checkboxGroupInput(
+      inputId = "checkbox", 
+      label = NULL, 
+      choices = choice, 
+      selected = choice, 
+      inline = T
+    )
+    
+  })
+
   # Select subset of `merged` dataframe
   data_post <- reactive({
 
@@ -355,7 +377,7 @@ server <- function(input, output) {
       merged %>%
         select(post_mean, model_id, estimate, se, lower95, higher95,
                color_var = input$color) %>%
-        filter(!is.na(color_var))
+        filter(!is.na(color_var), color_var %in% input$checkbox)
 
     } else if (input$framework == 'Frequentist') {
       # Frequentist models
@@ -363,7 +385,7 @@ server <- function(input, output) {
         filter(framework == "frequentist") %>%
         select(post_mean, model_id, estimate, se, lower95, higher95,
                color_var = input$color) %>%
-        filter(!is.na(color_var))
+        filter(!is.na(color_var), color_var %in% input$checkbox)
 
     } else {
       # Bayesian models
@@ -371,7 +393,7 @@ server <- function(input, output) {
         filter(framework == "bayesian") %>%
         select(post_mean, model_id, estimate, se, lower95, higher95,
                color_var = input$color) %>%
-        filter(!is.na(color_var))
+        filter(!is.na(color_var), color_var %in% input$checkbox)
 
     }
   })
