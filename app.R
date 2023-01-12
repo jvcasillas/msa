@@ -41,7 +41,8 @@ merged <- readRDS("merged_posterior_shiny.rds") %>%
       compelling == "not compelling",
       true = "Not compelling",
       false = "Compelling"
-      ),
+      ), 
+    found_effect = str_to_sentence(found_effect), 
     outcome = str_to_title(outcome),
     temporal_window = str_to_sentence(temporal_window),
     operationalisation = str_to_sentence(operationalisation),
@@ -194,11 +195,11 @@ ui <- navbarPage(
             inputId = "color",
             label = "Choose a factor:",
             choices = c(
-              "Compelling outcome" = "compelling",
               "Outcome measure" = "outcome",
               "Temporal window" = "temporal_window",
               "Operationalization" = "operationalisation",
-              "Typicality" = "typicality"
+              "Typicality" = "typicality", 
+              "Found effect?" = "found_effect"
             )
           )
         )
@@ -279,11 +280,11 @@ ui <- navbarPage(
           label = "Choose factor",
           choices = c(
             "None" = "none",
-            "Compelling outcome" = "compelling",
             "Outcome measure" = "outcome",
             "Temporal window" = "temporal_window",
             "Operationalization" = "operationalisation",
-            "Typicality" = "typicality"
+            "Typicality" = "typicality", 
+            "Found effect?" = "found_effect"
           )
         )
       ),
