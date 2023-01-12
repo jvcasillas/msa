@@ -133,33 +133,48 @@ ui <- navbarPage(
     fluidRow(
       column(1, p("")),
       column(10,
-        h3("Description"),
-        p("The purpose of this application is to...
-          The source code is available on github (see below).
-          Lorem ipsum dolor sit amet, consectetur adipisicing
-          elit, sed do eiusmod tempor incididunt ut labore et
-          dolore magna aliqua. Ut enim ad minim veniam, quis
-          nostrud exercitation ullamco laboris nisi ut aliquip
-          ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore
-          eu fugiat nulla pariatur. Excepteur sint occaecat
-          cupidatat non proident, sunt in culpa qui officia
-          deserunt mollit anim id est laborum."),
-        div(style = "float:right",
-          img(src = "ForkingPaths.png",
-              width = 500, style = "padding-left:20px")
+        h1("Welcome to the MSA shiny app"), 
+        div(align = "center", 
+          img(src = "ForkingPaths.png", width = "50%", 
+              style = "float:right; padding-left:20px"
+             )
         ),
-        p("The purpose of this application is to...
-          The source code is available on github (see below).
-          Lorem ipsum dolor sit amet, consectetur adipisicing
-          elit, sed do eiusmod tempor incididunt ut labore et
-          dolore magna aliqua. Ut enim ad minim veniam, quis
-          nostrud exercitation ullamco laboris nisi ut aliquip
-          ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore
-          eu fugiat nulla pariatur. Excepteur sint occaecat
-          cupidatat non proident, sunt in culpa qui officia
-          deserunt mollit anim id est laborum.")
+        #div(align = "center", 
+        #  h5("Do speakers acoustically modify utterances to signal 
+        #   atypical word combinations?")),
+        p("We gave the same speech production data set to 46 teams of 
+           researchers and asked them to answer the same research 
+           question:", 
+        strong("Do speakers acoustically modify utterances to signal
+           atypical word combinations?"),
+           "Using this shiny app you can explore parts of the data set."),
+        p("Upon receiving the data set, each team of analysts 
+           decided how to takle the research question, from choosing which 
+           phonetic measurements or other type of data to obtain from the 
+           recordings, to how to statistically analyze them. Next, they 
+           submitted a report of their findings and reviewed those other 
+           teams. Finally, we (the project coordinators) aggregated all of 
+           the individual analyses together using advanced meta-analytic 
+           techniques."),
+        p("The figure you see here illustrates some of the analytic 
+           flexibility associated with acoustic analyses. (A) An example of 
+           multiple possible and justifiable decisions when comparing two 
+           utterances; (B) Waveform and f0 track of the utterances", 
+        em("'I can't bear ANOTHER meeting on Zoom'"), 
+           "and", 
+        em("'I can't bear another meeting on ZOOM'."), 
+           "The green boxes mark the word 'another' in both sentences; (C)
+           Spectrogram and f0 track of the word 'another', exemplifying 
+           possible operationalizations of differences in f0."), 
+        p("The registered report, entitled ",
+        strong("Multidimensional signals and analytic flexibility: Estimating 
+           degrees of freedom in human speech analyses"), 
+           "is accepted for publication in AMPPS and will appear soon.
+           In the meantime, you can learn more about the MSA project at the 
+           project website", 
+           tags$a("(https://many-speech-analyses.github.io)", href = "https://many-speech-analyses.github.io"), 
+           "and you can read the preprint here:", 
+           tags$a("https://psyarxiv.com/q8t2k/.", href = "https://psyarxiv.com/q8t2k/"))
       ),
       column(1, p(""))
     ),
@@ -169,8 +184,13 @@ ui <- navbarPage(
       column(1, p("")),
       column(10,
         wellPanel(
-          p(strong("Created by:"),
-            tags$a("Joseph V. Casillas", href = "https://www.jvcasillas.com"),
+          p(strong("Initiating authors:"), 
+            tags$a("Stefano Coretta,", href = "https://stefanocoretta.github.io"), 
+            tags$a("Joseph V. Casillas,", href = "https://www.jvcasillas.com"), "and", 
+            tags$a("Timo Roettger", href = "https://www.simplpoints.com"),
+            br(),
+            strong("Shiny app created by:"),
+            "Joseph V. Casillas",
             br(),
             strong("Source code:"),
             tags$a("Github", href = "https://github.com/jvcasillas/msa/"), 
